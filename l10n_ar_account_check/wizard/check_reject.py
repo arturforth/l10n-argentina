@@ -80,13 +80,17 @@ class AccountCheckReject(models.Model):
             lines = []
             # Linea del cheque rechazado
 
-            account_id = False
-            if check.state == 'delivered':
-                account_id = config.rejected_account_id.id
-            elif check.state == 'deposited':
-                account_id = check.deposit_bank_id.account_id.id
-            elif check.state == 'wallet':
-                account_id = config.account_id.id
+            # TODO: Todos los cheques rechazados deben tener el mismo account.id sin importar el estado del mismo?
+            # account_id = False
+            # if check.state == 'delivered':
+            #     account_id = config.rejected_account_id.id
+            # elif check.state == 'deposited':
+            #     account_id = check.deposit_bank_id.account_id.id
+            # elif check.state == 'wallet':
+            #     account_id = config.account_id.id
+
+            # Se comento el bloque anterior y se setea account_id siempre como 12200 CHEQUES RECHAZADOS
+            account_id = config.rejected_account_id.id
 
             name = _('Check Rejected') + ' ' + check.number + ' '
             name += datetime.strptime(
